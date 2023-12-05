@@ -3,11 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Threads\ManageThreads;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Threads\ManageSingleThread;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Route::get('/threads', ManageThreads::class)->name('threads');
+
+Route::get('/threads', ManageThreads::class)->name('threads.index');
+Route::get('/threads/{thread}', ManageSingleThread::class)->name('threads.single');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
