@@ -13,7 +13,7 @@ test('The threads page is loaded with the threads.index route', function () {
     $this->get(route('threads.index'))
         ->assertStatus(200)
         ->assertSeeLivewire(ManageThreads::class)
-        ->assertSee('Forum Threads');
+        ->assertSee('Ephraim Island Social Club Forum');
 });
 test('The single thread page is loaded with the threads.single route', function () {
     loginAsUser();

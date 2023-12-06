@@ -14,27 +14,24 @@
 
     <!-- Scripts -->
     @livewireStyles
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
     <div class="max-w-5xl min-h-screen overflow-hidden mx-auto">
-        <div class=" text-right rounded-lg border-b-2 bg-gray-100 px-4 py-4">
-            @if (Route::has('login'))
-            @auth
-            <a href="{{ url('/dashboard') }}"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-            @else
-            <a href="{{ route('login') }}"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                in</a>
-
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}"
-                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-            @endif
-            @endauth
-            @endif
+        <div class="flex flex-row justify-between text-right rounded-lg border-b-2 bg-gray-100 px-4 py-4">
+            <div>
+                <a href="{{ url('/') }}"
+                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+            </div>
+            <div>
+                <a href="{{ route('login') }}"
+                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                    in</a>
+                <a href="{{ route('register') }}"
+                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+            </div>
 
         </div>
         <div class="pt-6 sm:pt-0 bg-gray-100 rounded-lg">

@@ -18,6 +18,8 @@
     <body class="font-sans antialiased  bg-teal-50">
         <div class="max-w-5xl mx-auto min-h-screen bg-gray-100">
             @include('layouts.navigation')
+
+            
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">
