@@ -11,6 +11,11 @@ class Thread extends Model
 {
     use HasFactory;
 
+    public function path()
+    {
+        return 'threads'.$this->id;
+    }
+
     public function replies() :HasMany
     {
         return $this->hasMany(Reply::class);

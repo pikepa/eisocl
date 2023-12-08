@@ -2,13 +2,22 @@
 
 use App\Models\User;
 use App\Models\Thread;
+beforeEach(function()
+{
+    $thread = Thread::factory()->create();
+});
 
 test('a thread has replies', function () {
-    $thread = Thread::factory()->create();
-    $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $thread->replies);
+    $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
 });
 
 test('a thread has a creator', function (){
-    $thread = Thread::factory()->create();
-    $this->assertInstanceOf(User::class, $thread->creator);
+    $this->assertInstanceOf(User::class, $this->thread->creator);
+});
+
+test('a thread can add a reply', function(){
+    $this->thread->addReply([
+        'body' => 'Foobar',
+        'iser_id' => 1
+    ]);
 });
