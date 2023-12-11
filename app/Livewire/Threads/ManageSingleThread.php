@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class ManageSingleThread extends Component
 {
     public $thread;
-    #[Validate('required|min:3', as: 'body')]
+    #[Validate('required|min:3|max:250', as: 'body')]
     public $newReply;
 
     public function mount($thread)
