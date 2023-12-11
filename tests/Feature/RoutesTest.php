@@ -9,14 +9,14 @@ test('The home page gives a successful response', function () {
 });
 
 test('The threads page is loaded with the threads.index route', function () {
-    loginAsUser();
+    loginAs();
     $this->get(route('threads.index'))
         ->assertStatus(200)
         ->assertSeeLivewire(ManageThreads::class)
         ->assertSee('Ephraim Island Social Club Forum');
 });
 test('The single thread page is loaded with the threads.single route', function () {
-    loginAsUser();
+    loginAs();
     $thread = Thread::factory()->create();
     $this->get(route('threads.single',[$thread]))
         ->assertStatus(200)

@@ -4,7 +4,7 @@ use App\Models\User;
 use App\Models\Thread;
 beforeEach(function()
 {
-    $thread = Thread::factory()->create();
+    $this->thread = Thread::factory()->create();
 });
 
 test('a thread has replies', function () {
@@ -18,6 +18,7 @@ test('a thread has a creator', function (){
 test('a thread can add a reply', function(){
     $this->thread->addReply([
         'body' => 'Foobar',
-        'iser_id' => 1
+        'user_id' => 1
     ]);
+    $this->assertCount(1, $this->thread->replies);
 });

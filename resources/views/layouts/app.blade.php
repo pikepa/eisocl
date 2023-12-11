@@ -15,7 +15,7 @@
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased  bg-teal-50">
+    <body class="pb-16 font-sans antialiased bg-teal-50">
         <div class="max-w-5xl mx-auto min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
@@ -35,5 +35,5 @@
             </main>
         </div>
         @livewireScripts
-    </body>
+    </body >
 </html>

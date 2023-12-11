@@ -4,7 +4,7 @@ use App\Models\Reply;
 use App\Models\Thread;
 
 beforeEach(function () {
-    loginAsUser(); 
+    loginAs(); 
     $this->thread = Thread::factory()->create();
 });
 test('a user can read all threads', function () {

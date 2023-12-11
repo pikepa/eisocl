@@ -44,7 +44,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function loginAsUser(User $user=null)
+function loginAs(User $user=null)
 {
    $user = $user ?? User::factory()->create();
    actingAs($user);

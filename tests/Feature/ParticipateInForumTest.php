@@ -3,13 +3,21 @@
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
+use Livewire\Livewire;
+use App\Livewire\Threads\ManageSingleThread;
 
 test('an authenticated user may participate in Forum Threads', function () 
 {
-    $this->be(User::factory()->create());
-    $thread = Thread::factory()->create();
-    $reply= Reply::factory()->make();
-    $this->post('threads/'.$thread->id . '/replies', $reply->toArray());
-    $this->get($thread->path())
-        ->assertSee($reply->body);
+    loginAs(); 
+    $thread= Thread::factory()->create();
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->set('newReply', 'foo too')
+        ->call('addThisReply');
+    $this->assertTrue(Reply::whereBody('foo too')->exists());
+});
+test('a guest may not reply to Forum Threads', function () 
+{
+    $thread= Thread::factory()->create();
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->assertDontSee('Enter your reply here !');
 });

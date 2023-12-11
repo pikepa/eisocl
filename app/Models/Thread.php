@@ -9,11 +9,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Thread extends Model
 {
+    protected $guarded = [];
     use HasFactory;
+
 
     public function path()
     {
-        return 'threads'.$this->id;
+        return 'threads/'.$this->id;
+    }
+
+    public function addReply($reply)
+    {
+        $this->replies()->create($reply);
     }
 
     public function replies() :HasMany
