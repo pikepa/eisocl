@@ -2,9 +2,16 @@
 
 use App\Models\User;
 use App\Models\Thread;
+use App\Models\Channel;
+use Pest\Plugins\Parallel\Handlers\Pest;
+
 beforeEach(function()
 {
     $this->thread = Thread::factory()->create();
+});
+
+test('a thread can make a string path', function(){
+    $this->assertEquals('/threads/'. $this->thread->channel->slug . '/' . $this->thread->id, $this->thread->path());
 });
 
 test('a thread has replies', function () {
@@ -21,4 +28,9 @@ test('a thread can add a reply', function(){
         'user_id' => 1
     ]);
     $this->assertCount(1, $this->thread->replies);
+});
+
+test('A thread belongs to a channel', function() {
+    $thread = Thread::factory()->create();
+    $this->assertInstanceOf(Channel::class, $thread->channel);
 });

@@ -16,6 +16,7 @@ class ManageThreads extends Component
     public $newThreadTitle ='';
     #[Validate('required|min:10|max:250', as: 'body')]
     public $newThreadBody ='';
+    public $channelId;
     
     public function render()
     {
@@ -28,6 +29,7 @@ class ManageThreads extends Component
         $newThread = Thread::create([
             'title'=> $this->newThreadTitle,
             'user_id' => Auth::user()->id,
+            'channel_id' => $this->channelId,
             'body' => $this->newThreadBody
         ]);
         $this->reset(); 

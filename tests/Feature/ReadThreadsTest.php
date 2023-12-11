@@ -14,7 +14,7 @@ test('a user can read all threads', function () {
     ->assertSee($this->thread->body);
 });
 test('a user can read a single thread', function () {
-    $this->get(route('threads.single',[$this->thread->id]))
+    $this->get(route('threads.single',[$this->thread->channel,$this->thread->id]))
     ->assertOk()
     ->assertSee($this->thread->title)
     ->assertSee($this->thread->body);
@@ -23,7 +23,7 @@ test('a user can read a single thread', function () {
 test('a User can read a single thread with associated replies', function ()
 {    
     $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
-    $this->get(route('threads.single',[$this->thread->id]))
+    $this->get(route('threads.single',[$this->thread->channel,$this->thread->id]))
     ->assertOk()
     ->assertSee($reply->owner->name)
     ->assertSee($reply->body);
