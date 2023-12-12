@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Channel;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,13 +19,13 @@ class ThreadFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => function (){
+            'user_id' => function () {
                 return User::factory()->create();
             },
-            'channel_id' => function (){
+            'channel_id' => function () {
                 return Channel::factory()->create();
             },
             'title' => fake()->catchPhrase(),
-            'body'  => fake()->paragraph()       ];
+            'body' => fake()->paragraph(),       ];
     }
 }

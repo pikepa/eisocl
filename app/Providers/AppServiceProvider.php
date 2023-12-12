@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-       \View::share('channels', \App\Models\Channel::orderBy('name')->get());
+        \View::share('channels', \App\Models\Channel::orderBy('name')->get());
     }
 }

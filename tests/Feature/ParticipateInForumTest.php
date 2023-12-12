@@ -1,31 +1,28 @@
 <?php
 
-use App\Models\User;
+use App\Livewire\Threads\ManageSingleThread;
 use App\Models\Reply;
 use App\Models\Thread;
 use Livewire\Livewire;
-use App\Livewire\Threads\ManageSingleThread;
 
-test('an authenticated user may participate in Forum Threads', function () 
-{
-    loginAs(); 
-    $thread= Thread::factory()->create();
+test('an authenticated user may participate in Forum Threads', function () {
+    loginAs();
+    $thread = Thread::factory()->create();
     Livewire::test(ManageSingleThread::class, [$thread->id])
         ->set('newReply', 'foo too')
         ->call('addThisReply');
     $this->assertTrue(Reply::whereBody('foo too')->exists());
 });
-test('a guest may not reply to Forum Threads', function () 
-{
-    $thread= Thread::factory()->create();
+test('a guest may not reply to Forum Threads', function () {
+    $thread = Thread::factory()->create();
     Livewire::test(ManageSingleThread::class, [$thread->id])
         ->assertDontSee('Enter your reply here !');
 });
 
 it('tests the reply validation rules', function (string $field, mixed $value, string $rule) {
     loginAs();
-    $thread= Thread::factory()->create();
-    Livewire::test(ManageSingleThread::class,[$thread->id])
+    $thread = Thread::factory()->create();
+    Livewire::test(ManageSingleThread::class, [$thread->id])
         ->set($field, $value)
         ->call('addThisReply')
         ->assertHasErrors([$field => $rule]);

@@ -18,13 +18,13 @@ class ReplyFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => function (){
+            'user_id' => function () {
                 return User::factory()->create();
             },
-            'thread_id' => function (){
+            'thread_id' => function () {
                 return User::factory()->create();
             },
-            'body'  => fake()->paragraph()           
-            ];
+            'body' => fake()->paragraph(),
+        ];
     }
 }

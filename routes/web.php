@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Livewire\Threads\ManageThreads;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Threads\ManageSingleThread;
+use App\Livewire\Threads\ManageThreads;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,7 +15,7 @@ Route::get('/threads/{channel}/{thread}', ManageSingleThread::class)->name('thre
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-    })->middleware(['auth', 'verified'])
+})->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {

@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Reply extends Model
 {
     protected $guarded = [];
+
     use HasFactory;
 
-    public function owner() :BelongsTo
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }

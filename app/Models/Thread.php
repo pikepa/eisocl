@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Thread extends Model
 {
     protected $guarded = [];
-    use HasFactory;
 
+    use HasFactory;
 
     public function path()
     {
@@ -23,15 +23,17 @@ class Thread extends Model
         $this->replies()->create($reply);
     }
 
-    public function replies() :HasMany
+    public function replies(): HasMany
     {
         return $this->hasMany(Reply::class);
     }
-    public function creator() :BelongsTo
+
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function channel() :BelongsTo
+
+    public function channel(): BelongsTo
     {
         return $this->belongsTo(Channel::class, 'channel_id');
     }

@@ -3,13 +3,14 @@
 namespace App\Livewire\Threads;
 
 use App\Models\Thread;
-use Livewire\Component;
-use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class ManageSingleThread extends Component
 {
     public $thread;
+
     #[Validate('required|min:3|max:250', as: 'body')]
     public $newReply;
 
@@ -17,14 +18,17 @@ class ManageSingleThread extends Component
     {
         $this->thread = Thread::find($thread);
     }
-    public function addThisReply(){
+
+    public function addThisReply()
+    {
         $this->validate();
         $this->thread->replies()->create([
-            'body'=> $this->newReply,
+            'body' => $this->newReply,
             'user_id' => Auth::user()->id,
         ]);
-        $this->reset('newReply'); 
+        $this->reset('newReply');
     }
+
     public function render()
     {
         return view('livewire.threads.manage-single-thread');
