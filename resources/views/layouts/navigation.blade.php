@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')">
                         {{ __('Forum') }}
                     </x-nav-link>
+                    <div class="mt-4">
+                        <x-select-dropdown  />
+                    </div>
                     <x-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')">
                         {{ __('Events') }}
                     </x-nav-link>
@@ -86,6 +89,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" >
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
 
         </div>
 
