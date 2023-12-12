@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Threads;
 
+use App\Models\Channel;
 use App\Models\Thread;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
@@ -17,10 +18,21 @@ class ManageThreads extends Component
     #[Validate('required|min:10|max:250', as: 'body')]
     public $newThreadBody ='';
     public $channelId;
+    public $channel;
     
+    public function mount(Channel $channel)
+    {
+        if($channel){
+            $this->$channel = $channel;
+        }
+    }
     public function render()
     {
-        $this->threads= Thread::get();
+        if($this->channel){
+            $this->threads = $this->channel->threads()->latest()->get();
+        } else {
+            $this->threads = Thread::latest()->get();
+        }
         return view('livewire.threads.manage-threads');
     }
 

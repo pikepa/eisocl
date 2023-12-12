@@ -10,6 +10,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/threads', ManageThreads::class)->name('threads.index');
+Route::get('/threads/{channel}', ManageThreads::class)->name('threads.channel');
 Route::get('/threads/{channel}/{thread}', ManageSingleThread::class)->name('threads.single');
 
 Route::get('/dashboard', function () {
