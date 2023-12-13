@@ -12,9 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex text-gray-900">
-                    <x-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')">
-                        {{ __('Forum') }}
-                    </x-nav-link>
+                    <div class="mt-4">
+                        <x-select-dropdown title="Browse" >
+                            <a href="/threads/" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">All Threads</a>
+                            @auth
+                            <a href="/threads/?by={{ auth()->user()->name }}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">My Threads</a>
+                            @endauth
+                        </x-select-dropdown>
+                    </div>
                     @auth
                     <x-nav-link :href="route('threads.create')" :active="request()->routeIs('threads')">
                         {{ __('New Thread') }}
@@ -22,7 +27,11 @@
                     @endauth
 
                     <div class="mt-4">
-                        <x-select-dropdown  />
+                        <x-select-dropdown title="Channels">
+                            @foreach ($channels as $channel)
+                            <a href="/threads/{{ $channel->slug }}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{{ $channel->name }}</a>
+                            @endforeach
+                        </x-select-dropdown>
                     </div>
                     <x-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')">
                         {{ __('Events') }}
