@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Threads;
 
-use App\Models\Channel;
+use App\Models\User;
 use App\Models\Thread;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\Validate;
+use App\Models\Channel;
+
 use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ManageThreads extends Component
 {
@@ -17,44 +17,28 @@ class ManageThreads extends Component
 
     public $thread;
 
-    #[Validate('required|min:3|max:75', as: 'title')]
-    public $newThreadTitle = '';
-
-    #[Validate('required|min:10|max:250', as: 'body')]
-    public $newThreadBody = '';
-
-    public $channelId;
-
     public $channel;
 
     public function mount(Channel $channel)
     {
-        if ($channel) {
             $this->$channel = $channel;
-        }
     }
 
     public function render()
     {
         if ($this->channel) {
-            $this->threads = $this->channel->threads()->latest()->get();
+            $this->threads = $this->channel->threads()->latest();
         } else {
-            $this->threads = Thread::latest()->get();
+            $this->threads = Thread::latest();
         }
-
+        //if request('by'), we should filter by the given username
+        if($username = request('by')) {
+            $user = User::where('name', $username)->firstOrFail();
+            $this->threads->where('user_id', $user->id);
+        }
+        $this->threads = $this->threads->get();
         return view('livewire.threads.manage-threads');
     }
 
-    public function addNewThread()
-    {
-        $this->validate();
-        $newThread = Thread::create([
-            'title' => $this->newThreadTitle,
-            'user_id' => Auth::user()->id,
-            'channel_id' => $this->channelId,
-            'body' => $this->newThreadBody,
-        ]);
-        $this->reset();
-        $this->redirect($newThread->path());
-    }
+    
 }

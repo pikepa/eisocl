@@ -1,15 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Livewire\Threads\CreateThread;
+use App\Livewire\Threads\ManageThreads;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Threads\ManageSingleThread;
-use App\Livewire\Threads\ManageThreads;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
 Route::get('/threads', ManageThreads::class)->name('threads.index');
+Route::get('/threads/create', CreateThread::class)->name('threads.create');
 Route::get('/threads/{channel}', ManageThreads::class)->name('threads.channel');
 Route::get('/threads/{channel}/{thread}', ManageSingleThread::class)->name('threads.single');
 

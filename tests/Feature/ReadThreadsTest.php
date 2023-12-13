@@ -1,8 +1,9 @@
 <?php
 
-use App\Models\Channel;
+use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\Channel;
 
 beforeEach(function () {
     loginAs();
@@ -38,3 +39,16 @@ test('a user can filter threads according to a channel', function () {
         ->assertSee($threadInChannel->title)
         ->assertDontSee($threadNotInChannel->title);
 });
+
+
+    test('a user can filter threads by any user name', function () {
+          //Arrange
+            loginAs(User::factory()->create(['name' => 'JohnDoe']));
+            $threadbyJohnDoe= Thread::factory()->create(['user_id' => auth()->id()]);
+            $threadNotByJohnDoe= Thread::factory()->create();
+          //Act & Assert
+            $this->get('threads?by=JohnDoe')
+            ->assertSee($threadbyJohnDoe->title)
+            ->assertDontSee($threadNotByJohnDoe->title);
+
+        });  

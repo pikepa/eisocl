@@ -11,10 +11,16 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex text-gray-900">
                     <x-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')">
                         {{ __('Forum') }}
                     </x-nav-link>
+                    @auth
+                    <x-nav-link :href="route('threads.create')" :active="request()->routeIs('threads')">
+                        {{ __('New Thread') }}
+                    </x-nav-link>
+                    @endauth
+
                     <div class="mt-4">
                         <x-select-dropdown  />
                     </div>

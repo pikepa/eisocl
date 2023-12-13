@@ -1,13 +1,13 @@
 <?php
 
-use App\Livewire\Threads\ManageThreads;
 use App\Models\Thread;
 use Livewire\Livewire;
+use App\Livewire\Threads\CreateThread;
 
 test('an authenticated user can create a new forum thread', function () {
     loginAs();
     $thread = Thread::factory()->create();
-    Livewire::test(ManageThreads::class)
+    Livewire::test(CreateThread::class)
         ->set('newThreadTitle', $thread->title)
         ->set('newThreadBody', $thread->body)
         ->set('channelId', $thread->channel_id)
@@ -16,13 +16,14 @@ test('an authenticated user can create a new forum thread', function () {
     $this->assertDatabaseHas('threads', ['title' => $thread->title]);
 });
 test('a guest may not create a Forum Thread', function () {
-    Livewire::test(ManageThreads::class)
-        ->assertDontSee('Enter the new thread title');
-});
+        $this->get('/')->assertDontSee('New Thread');
+        loginAs();
+        $this->get('/')->assertSee('New Thread');
+    });
 
 it('tests the thread validation rules', function (string $field, mixed $value, string $rule) {
     loginAs();
-    Livewire::test(ManageThreads::class)
+    Livewire::test(CreateThread::class)
         ->set($field, $value)
         ->call('addNewThread')
         ->assertHasErrors([$field => $rule]);
