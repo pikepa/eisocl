@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Livewire\Threads\CreateThread;
-use App\Livewire\Threads\ManageThreads;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Threads\CreateThread;
 use App\Livewire\Threads\ManageSingleThread;
+use App\Livewire\Threads\ManageThreads;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');

@@ -3,18 +3,20 @@
 namespace App\Livewire\Threads;
 
 use App\Models\Thread;
-use Livewire\Component;
-use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class CreateThread extends Component
-{ 
+{
     #[Validate('required|min:3|max:75', as: 'title')]
     public $newThreadTitle = '';
+
     #[Validate('required|min:10|max:250', as: 'body')]
     public $newThreadBody = '';
+
     #[Validate('required', as: 'channel_id')]
-    public $channelId ='';
+    public $channelId = '';
 
     public function render()
     {
