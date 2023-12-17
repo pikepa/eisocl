@@ -27,6 +27,7 @@ class Thread extends Model
     {
         return $filters->apply($query);
     }
+
     public function replies(): HasMany
     {
         return $this->hasMany(Reply::class);

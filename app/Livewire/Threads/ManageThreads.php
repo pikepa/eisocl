@@ -2,20 +2,21 @@
 
 namespace App\Livewire\Threads;
 
-use App\Models\User;
-use App\Models\Thread;
 use App\Filters\ThreadFilters;
 use App\Models\Channel;
-use Livewire\Component;
+use App\Models\Thread;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class ManageThreads extends Component
 {
     use AuthorizesRequests;
 
     public $threads;
+
     public $thread;
-    public $channel;
+
+    public Channel $channel;
 
     public function mount(Channel $channel)
     {
@@ -24,11 +25,21 @@ class ManageThreads extends Component
 
     public function render(ThreadFilters $filters)
     {
-        $this->threads=Thread::latest()->filter($filters);
+        $threads = $this->getThreads($this->channel, $filters);
+        // $this->threads=Thread::latest()->filter($filters);
+        // if ($this->channel->exists) {
+        //     $this->threads->where('channel_id', $this->channel->id);
+        // }
+        // $this->threads=$this->threads->get();
+        return view('livewire.threads.manage-threads');
+    }
+
+    public function getThreads($channel, $filters)
+    {
+        $this->threads = Thread::latest()->filter($filters);
         if ($this->channel->exists) {
             $this->threads->where('channel_id', $this->channel->id);
         }
-        $this->threads=$this->threads->get();
-        return view('livewire.threads.manage-threads');
+        $this->threads = $this->threads->get();
     }
 }
