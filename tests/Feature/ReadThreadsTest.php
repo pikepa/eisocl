@@ -50,3 +50,19 @@ test('a user can filter threads according to a channel', function () {
             ->assertSee($threadbyJohnDoe->title)
             ->assertDontSee($threadNotByJohnDoe->title);
     });
+
+    test('a user can filter threads by popularity', function () {
+        $threadWithThreeReplies = Thread::factory()
+            ->hasReplies(3)
+            ->create();
+        $threadWithTwoReplies = Thread::factory()
+            ->hasReplies(2)
+            ->create();
+        $threadWithNoReplies = $this->thread;
+        $this->get('/threads?popular=1')
+            ->assertSeeInOrder([
+                $threadWithThreeReplies->title,
+                $threadWithTwoReplies->title,
+                $threadWithNoReplies->title,
+            ]);
+    });

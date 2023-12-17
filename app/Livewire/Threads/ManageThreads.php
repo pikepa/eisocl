@@ -26,11 +26,11 @@ class ManageThreads extends Component
     public function render(ThreadFilters $filters)
     {
         $threads = $this->getThreads($this->channel, $filters);
-        // $this->threads=Thread::latest()->filter($filters);
-        // if ($this->channel->exists) {
-        //     $this->threads->where('channel_id', $this->channel->id);
-        // }
-        // $this->threads=$this->threads->get();
+
+        if (request()->wantsJson()) {
+            return $threads;
+        }
+
         return view('livewire.threads.manage-threads');
     }
 
@@ -40,6 +40,8 @@ class ManageThreads extends Component
         if ($this->channel->exists) {
             $this->threads->where('channel_id', $this->channel->id);
         }
+        //  dd($this->threads->toSql());
+
         $this->threads = $this->threads->get();
     }
 }

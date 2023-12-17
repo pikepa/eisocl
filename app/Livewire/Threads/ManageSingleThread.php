@@ -31,9 +31,9 @@ class ManageSingleThread extends Component
 
     public function render()
     {
-        return view('livewire.threads.manage-single-thread',[
-            'thread' =>$this->thread,
-            'replies' => $this->thread->replies()->paginate(10)
+        return view('livewire.threads.manage-single-thread', [
+            'thread' => $this->thread,
+            'replies' => $this->thread->replies()->paginate(10),
         ]);
     }
 }
