@@ -1,8 +1,8 @@
 <div>
-    <div class="p-6 pb-0 ">
+    <div class="p-4 pb-0 ">
         <a class="text-xl  text-blue-500" href="{{ $thread->path() }}">{{ $thread->title }}</a>
     </div>
-    <div class="pl-6 pb-4 border-b-2 border-b-gray-100 text-gray-900">
+    <div class="pl-4 pb-4 border-b-2 border-b-gray-100 text-gray-900">
         {{ $thread->body }}
         <div class="flex flex-row text-xs">
             <div class="pt-4 pr-1 font-extralight ">
