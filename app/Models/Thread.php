@@ -23,6 +23,10 @@ class Thread extends Model
         $this->replies()->create($reply);
     }
 
+    public function scopefilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
     public function replies(): HasMany
     {
         return $this->hasMany(Reply::class);
