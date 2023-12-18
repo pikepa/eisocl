@@ -15,7 +15,7 @@
         
         <button wire:click='addFavorite({{ $reply->id }})' class="border text-gray-100 font-semibold rounded-lg px-4 py-2 bg-sky-700  focus:cursor-auto   {{ $reply->isFavorited() ? 'opacity-50' : '' }}"
             {{ $reply->isFavorited() ? 'disabled' : '' }} >
-            {{ $reply->favorites->count() }} {{ Str::plural('favorite', $reply->favorites_count) }}
+            {{ $reply->favorites_count }} {{ Str::plural('favorite', $reply->favorites_count) }}
         </button>
     </div>
 </x-containers.reply-body>

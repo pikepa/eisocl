@@ -11,6 +11,8 @@ class Thread extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['creator', 'channel'];
+
     use HasFactory;
 
     protected static function boot()
