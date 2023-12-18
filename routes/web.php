@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Threads\CreateThread;
 use App\Livewire\Threads\ManageSingleThread;
@@ -15,7 +14,6 @@ Route::get('/threads', ManageThreads::class)->name('threads.index');
 Route::get('/threads/create', CreateThread::class)->name('threads.create');
 Route::get('/threads/{channel}', ManageThreads::class)->name('threads.channel');
 Route::get('/threads/{channel}/{thread}', ManageSingleThread::class)->name('threads.single');
-Route::post('/replies/{reply}/favorites', [FavoritesController::class, 'store']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

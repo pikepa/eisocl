@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Threads;
 
+use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
@@ -35,5 +36,14 @@ class ManageSingleThread extends Component
             'thread' => $this->thread,
             'replies' => $this->thread->replies()->paginate(10),
         ]);
+    }
+
+    public function addFavorite(Reply $reply)
+    {
+        if (auth()->check()) {
+            return $reply->favorite();
+        } else {
+            return redirect()->to('/login');
+        }
     }
 }

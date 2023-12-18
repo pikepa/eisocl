@@ -1,30 +1,44 @@
 <?php
 
-use App\Models\Reply;
+use App\Livewire\Threads\ManageSingleThread;
+use App\Models\Thread;
+use Livewire\Livewire;
 
-test('a guest can not favorite anything', function () {
-    $this->post('replies/1/favorites')
+test('a guest can not favorite anything is redirected to login', function () {
+    $thread = Thread::factory()
+                ->hasReplies(1)
+                ->create();
+    $reply = $thread->replies()->first();
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->call('addFavorite', [$reply->id])
         ->assertRedirect('/login');
 });
 
 test('an authenticated user can favorite any reply', function () {
     loginAs();
-    $this->withoutExceptionHandling();
-    $reply = Reply::factory()->create();
-    $this->post('/replies/'.$reply->id.'/favorites');
-    $this->assertCount(1, $reply->favorites);
+    $thread = Thread::factory()
+                ->hasReplies(1)
+                ->create();
+    $reply = $thread->replies()->first();
+
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->call('addFavorite', [$reply->id]);
+    $this->assertDatabaseHas('favorites',
+        ['favorited_id' => $reply->id,
+            'user_id' => auth()->user()->id,
+            'favorited_type' => 'App\Models\Reply', ]);
 });
 
 test('an authenticated user may only favorite a reply once', function () {
     loginAs();
-    $reply = Reply::factory()->create();
-    $this->withoutExceptionHandling();
-    try {
-        $this->post('/replies/'.$reply->id.'/favorites');
-        $this->post('/replies/'.$reply->id.'/favorites');
-    } catch (\Exception $e) {
-        $this->fail('Did not expect to insert the same record twice');
-    }
+    $thread = Thread::factory()
+            ->hasReplies(1)
+            ->create();
+    $reply = $thread->replies()->first();
 
-    $this->assertCount(1, $reply->favorites);
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->call('addFavorite', [$reply->id])
+        ->call('addFavorite', [$reply->id]);
+
+    $this->assertDatabaseCount('favorites', 1);
 });
