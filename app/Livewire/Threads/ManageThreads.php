@@ -36,7 +36,7 @@ class ManageThreads extends Component
 
     public function getThreads($channel, $filters)
     {
-        $this->threads = Thread::latest()->filter($filters);
+        $this->threads = Thread::with('channel', 'creator')->latest()->filter($filters);
         if ($this->channel->exists) {
             $this->threads->where('channel_id', $this->channel->id);
         }

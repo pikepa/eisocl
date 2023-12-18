@@ -10,6 +10,8 @@ class Reply extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['owner', 'favorites'];
+
     use HasFactory;
 
     public function owner(): BelongsTo
