@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reply;
-use App\Models\Favorite;
 
 class FavoritesController extends Controller
 {
@@ -12,7 +11,8 @@ class FavoritesController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Reply $reply){
-       return $reply->favorite();
+    public function store(Reply $reply)
+    {
+        return $reply->favorite();
     }
 }
