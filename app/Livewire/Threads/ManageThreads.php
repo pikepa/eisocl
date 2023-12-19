@@ -40,8 +40,17 @@ class ManageThreads extends Component
         if ($this->channel->exists) {
             $this->threads->where('channel_id', $this->channel->id);
         }
-        //  dd($this->threads->toSql());
-
         $this->threads = $this->threads->get();
+    }
+
+    public function deleteThread($thread)
+    {
+        $thread = Thread::find($thread);
+        if ($thread->replies()) {
+            $thread->replies()->delete();
+        }
+        $thread->delete();
+
+        return redirect('/threads/?by='.$thread->creator->name);
     }
 }

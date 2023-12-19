@@ -13,6 +13,7 @@ test('an authenticated user may participate in Forum Threads', function () {
         ->call('addThisReply');
     $this->assertTrue(Reply::whereBody('foo too')->exists());
 });
+
 test('a guest may not reply to Forum Threads', function () {
     $thread = Thread::factory()->create();
     Livewire::test(ManageSingleThread::class, [$thread->id])

@@ -1,23 +1,37 @@
-<div>
-<div class="flex flex-row justify-between items-center">
-    <div class="p-2 pl-4 ">
-        <a class="text-xl  text-blue-500" href="{{ $thread->path() }}">{{ $thread->title }}</a>
-    </div>
-    <div class="text-sm mr-4 p-2  text-blue-500">
-        <strong><a href="{{ $thread->path() }}">{{ $thread->replies_count }} {{ Str::plural('reply', $thread->replies_count) }}</a></strong>
-    </div>
-</div>
-    <div class="pl-4 pr-4 pb-4 border-b-2 border-b-gray-100 text-gray-900">
-        {{ $thread->body }}
-        <div class="flex flex-row text-xs">
-            <div class="pt-4 pr-1 font-extralight ">
-                Created by
+<div class="">
+    <div class="rounded-lg border-2 border-gray-300 mb-4 p-4 pt-2">
+        <div class="  text-gray-900">
+            <div class="flex flex-row justify-between items-center ">
+                <div class="  ">
+                    <a class="text-xl  text-blue-500" href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                </div>
+                <div class="text-sm mr-4 p-2  text-blue-500">
+                    <strong><a href="{{ $thread->path() }}">{{ $thread->replies_count }} {{ Str::plural('reply',
+                            $thread->replies_count) }}</a></strong>
+                </div>
             </div>
-            <div class="pt-4 font-extralight  text-blue-700">
-                <a href="#">{{ $thread->creator->name }}</a>
+            <div>
+                {{ $thread->body }}
             </div>
-            <div class="pt-4 pl-1 font-extralight ">
-                - {{ $thread->created_at->diffForHumans() }}
+            <div class="flex flex-row justify-between ">
+                <div class="flex flex-row text-xs">
+                    <div class="pt-4 pr-1 font-extralight ">
+                        Created by
+                    </div>
+                    <div class="pt-4 font-extralight  text-blue-700">
+                        <a href="#">{{ $thread->creator->name }}</a>
+                    </div>
+                    <div class="pt-4 pl-1 font-extralight ">
+                        - {{ $thread->created_at->diffForHumans() }}
+                    </div>
+                </div>
+                @isset(Auth::user()->id)
+                @if( Auth::user()->id == $thread->user_id )
+                <button class="pt-4 pr-4 text-xs hover:text-red-900 text-red-700 font-extralight ">
+                    <div wire:click='deleteThread({{ $thread->id }})' class="">Delete Thread</div>
+                </button>
+                @endif
+                @endisset
             </div>
         </div>
     </div>

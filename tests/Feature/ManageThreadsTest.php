@@ -1,7 +1,9 @@
 <?php
 
 use App\Livewire\Threads\CreateThread;
+use App\Livewire\Threads\ManageThreads;
 use App\Models\Thread;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
 
 test('an authenticated user can create a new forum thread', function () {
@@ -15,6 +17,7 @@ test('an authenticated user can create a new forum thread', function () {
     $this->assertDatabaseCount('threads', 2);
     $this->assertDatabaseHas('threads', ['title' => $thread->title]);
 });
+
 test('a guest may not create a Forum Thread', function () {
     $this->get('/')->assertDontSee('New Thread');
     loginAs();
@@ -35,3 +38,21 @@ it('tests the thread validation rules', function (string $field, mixed $value, s
     'body is too long' => ['newThreadBody', str_repeat('*', 251), 'max'],
     'body is too short' => ['newThreadBody', str_repeat('*', 2), 'min'],
 ]);
+
+test('an authenticated user can delete their thread', function () {
+    loginAs();
+    $this->withExceptionHandling();
+    $thread = Thread::factory()->create(['user_id' => Auth::user()->id]);
+
+    $this->assertDatabaseCount('threads', 1);
+
+    $component = Livewire::test(ManageThreads::class);
+    $component->assertStatus(200);
+
+    Livewire::test(ManageThreads::class)
+        ->assertSee('Delete Thread')
+        ->call('deleteThread', $thread->id)
+        ->assertSuccessful()
+        ->assertRedirect('/threads/?by='.$thread->creator->name);
+    $this->assertDatabaseCount('threads', 0);
+});

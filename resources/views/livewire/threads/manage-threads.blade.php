@@ -7,7 +7,7 @@
     <!-- main body -->
     <x-containers.main-body>
         @foreach($threads as $thread)
-        <x-threads.thread-item :thread="$thread" />
+                <x-threads.thread-item :thread="$thread" />
         @endforeach
     </x-containers.main-body>
     <!-- Add a New Reply -->
