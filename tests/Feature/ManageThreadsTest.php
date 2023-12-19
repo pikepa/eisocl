@@ -39,17 +39,16 @@ it('tests the thread validation rules', function (string $field, mixed $value, s
     'body is too short' => ['newThreadBody', str_repeat('*', 2), 'min'],
 ]);
 
-test('Unauthorised Users may not delete threads', function (){
+test('Unauthorised Users may not delete threads', function () {
     $thread = Thread::factory()->create();
 
     Livewire::test(ManageThreads::class)
         ->assertDontSee('Delete Thread')
         ->call('deleteThread', $thread->id)
-        ->assertRedirect('/login');
+        ->assertStatus(403);
 
     $this->assertDatabaseCount('threads', 1);
 });
-
 
 test('an authorised user can delete their thread', function () {
     loginAs();

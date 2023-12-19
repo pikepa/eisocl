@@ -46,9 +46,10 @@ class ManageThreads extends Component
     public function deleteThread($thread)
     {
         $thread = Thread::find($thread);
-        if($thread->user_id != auth()->id()){
-            return redirect('/login');
-        }
+        $this->authorize('update', $thread);
+        // if($thread->user_id != auth()->id()){
+        //     return redirect('/login');
+        // }
         if ($thread->replies()) {
             $thread->replies()->delete();
         }

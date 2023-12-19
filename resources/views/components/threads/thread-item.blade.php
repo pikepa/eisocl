@@ -25,13 +25,11 @@
                         - {{ $thread->created_at->diffForHumans() }}
                     </div>
                 </div>
-                @isset(Auth::user()->id)
-                @if( Auth::user()->id == $thread->user_id )
+                @can('update', $thread)
                 <button class="pt-4 pr-4 text-xs hover:text-red-900 text-red-700 font-extralight ">
                     <div wire:click='deleteThread({{ $thread->id }})' class="">Delete Thread</div>
                 </button>
-                @endif
-                @endisset
+                @endcan
             </div>
         </div>
     </div>
