@@ -39,15 +39,21 @@ it('tests the thread validation rules', function (string $field, mixed $value, s
     'body is too short' => ['newThreadBody', str_repeat('*', 2), 'min'],
 ]);
 
-test('an authenticated user can delete their thread', function () {
-    loginAs();
-    $this->withExceptionHandling();
-    $thread = Thread::factory()->create(['user_id' => Auth::user()->id]);
+test('Unauthorised Users may not delete threads', function (){
+    $thread = Thread::factory()->create();
+
+    Livewire::test(ManageThreads::class)
+        ->assertDontSee('Delete Thread')
+        ->call('deleteThread', $thread->id)
+        ->assertRedirect('/login');
 
     $this->assertDatabaseCount('threads', 1);
+});
 
-    $component = Livewire::test(ManageThreads::class);
-    $component->assertStatus(200);
+
+test('an authorised user can delete their thread', function () {
+    loginAs();
+    $thread = Thread::factory()->create(['user_id' => Auth::user()->id]);
 
     Livewire::test(ManageThreads::class)
         ->assertSee('Delete Thread')

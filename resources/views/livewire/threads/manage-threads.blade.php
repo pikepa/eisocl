@@ -6,9 +6,11 @@
     </x-slot>
     <!-- main body -->
     <x-containers.main-body>
-        @foreach($threads as $thread)
+        @forelse($threads as $thread)
                 <x-threads.thread-item :thread="$thread" />
-        @endforeach
+        @empty
+        <p class="text-center">There are no relevant results at this time.</p>
+        @endforelse
     </x-containers.main-body>
     <!-- Add a New Reply -->
     
