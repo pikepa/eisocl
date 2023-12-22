@@ -2,6 +2,8 @@
 
 use App\Livewire\Threads\CreateThread;
 use App\Livewire\Threads\ManageThreads;
+use App\Models\Activity;
+use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
@@ -53,11 +55,15 @@ test('Unauthorised Users may not delete threads', function () {
 test('an authorised user can delete their thread', function () {
     loginAs();
     $thread = Thread::factory()->create(['user_id' => Auth::user()->id]);
+    $reply = Reply::factory()->create(['thread_id' => $thread->id]);
 
     Livewire::test(ManageThreads::class)
         ->assertSee('Delete Thread')
         ->call('deleteThread', $thread->id)
         ->assertSuccessful()
         ->assertRedirect('/threads/?by='.$thread->creator->name);
-    $this->assertDatabaseCount('threads', 0);
+
+    $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+    $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    $this->assertEquals(0, Activity::count());
 });

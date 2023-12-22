@@ -23,3 +23,14 @@ test('The single thread page is loaded with the threads.single route', function 
         ->assertStatus(200)
         ->assertSeeLivewire(ManageSingleThread::class);
 });
+
+test('The Activity page is loaded with the corresponding activities', function () {
+    loginAs();
+    $thread = Thread::factory()->create();
+    $this->get(route('user.activities', [auth()->user()]))
+        ->assertStatus(200)
+        ->assertSee($thread->title)
+        ->assertSee('Activity Feed for '.auth()->user()->name)
+        ->assertSee(auth()->user()->name);
+    // ->assertSeeLivewire(ManageSingleThread::class);});
+});
