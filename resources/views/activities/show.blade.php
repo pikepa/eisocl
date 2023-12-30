@@ -12,8 +12,8 @@
                 {{ $date }}
             </div>
             <div class="pl-8">
-                @foreach($activity as $item)
-                @include ("components.activities.{$item->type}", ['activity' => $item])
+                @foreach($activity as $record)
+                    @include ("components.activities.{$record->type}", ['activity' => $record])
                 @endforeach
             </div>
             @endforeach
