@@ -1,10 +1,9 @@
 <?php
 
-use auth;
-use Carbon\Carbon;
+use App\Models\Activity;
 use App\Models\Reply;
 use App\Models\Thread;
-use App\Models\Activity;
+use Carbon\Carbon;
 
 test('it records activity when a thread is created', function () {
     LoginAs();
@@ -32,7 +31,7 @@ it('fetches an Activity feed for any user', function () {
     auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subweek()]);
 
     $feed = (Activity::feed(auth()->user()));
-    
+
     $this->assertTrue($feed->keys()->contains(Carbon::now()->format('Y-m-d')));
     $this->assertTrue($feed->keys()->contains(Carbon::now()->subWeek()->format('Y-m-d')));
 });
@@ -40,8 +39,7 @@ test('the activity feed has the correct attributes displayed', function () {
     LoginAs();
 
     Reply::factory()->create(['user_id' => auth()->user()->id]);
-    $this->get('/activities/'. auth()->user()->id )
+    $this->get('/activities/'.auth()->user()->id)
         ->assertOK()
-        ->assertSee('Activity Feed for ' . auth()->user()->name );
+        ->assertSee('Activity Feed for '.auth()->user()->name);
 });
-

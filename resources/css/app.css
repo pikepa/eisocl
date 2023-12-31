@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .url {
+      @apply text-blue-500 underline;
+    }
+  }

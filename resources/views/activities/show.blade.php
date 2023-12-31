@@ -13,7 +13,9 @@
             </div>
             <div class="pl-8">
                 @foreach($activity as $record)
-                    @include ("components.activities.{$record->type}", ['activity' => $record])
+                    @if (view()->exists("components.activities.{$record->type}"))
+                        @include ("components.activities.{$record->type}", ['activity' => $record])
+                    @endif
                 @endforeach
             </div>
             @endforeach

@@ -15,6 +15,7 @@ class ActivitiesController extends Controller
      */
     public function show(User $user)
     {
+     //   return $user->activity()->with('subject')->latest()->get();
         return view('activities.show', [
             'profileUser' => $user,
             'activities' => Activity::feed($user),

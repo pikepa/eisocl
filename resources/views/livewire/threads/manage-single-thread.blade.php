@@ -10,17 +10,7 @@
             <div class=" bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class=" pl-6 p-4 pb-4 border-b-2 border-b-gray-100 text-gray-700">
                     {{ $thread->body }}
-                    <div class="flex flex-row text-xs">
-                        <div class="pt-4 pr-1 font-extralight ">
-                            Created by
-                        </div>
-                        <div class="pt-4 font-extralight  text-blue-700">
-                            <a href="#">{{ $thread->creator->name }}</a>
-                        </div>
-                        <div class="pt-4 pl-1 font-extralight ">
-                            - {{ $thread->created_at->diffForHumans() }}
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <h1 class="pl-6 pt-2  font-semibold">
@@ -50,7 +40,7 @@
             <div class="mt-4 m-2 bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class=" pl-6 p-4 pb-4 border-b-2 border-b-gray-100 text-gray-700">
                     <p> This thread was published {{ $thread->created_at->diffForHumans() }} by
-                        <span class="text-blue-500"><a href="#">{{ $thread->creator->name }}</a></span> 
+                        <span class="text-blue-500"><a href="/activities/{{ $thread->creator->id }}">{{ $thread->creator->name }}</a></span> 
                         , and currently has {{ $thread->replies_count }} {{ Str::plural('comment',$thread->replies_count) }}
                     </p>
                 </div>
