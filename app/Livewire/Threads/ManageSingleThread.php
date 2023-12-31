@@ -30,6 +30,14 @@ class ManageSingleThread extends Component
         $this->reset('newReply');
     }
 
+    public function deleteThisReply(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->delete();
+
+        return back();
+    }
+
     public function render()
     {
         return view('livewire.threads.manage-single-thread', [

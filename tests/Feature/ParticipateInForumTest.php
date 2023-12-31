@@ -32,3 +32,24 @@ it('tests the reply validation rules', function (string $field, mixed $value, st
     'body is too long' => ['newReply', str_repeat('*', 251), 'max'],
     'body is too short' => ['newReply', str_repeat('*', 2), 'min'],
 ]);
+
+test('unauthorised users can not delete replies', function () {
+    $this->withExceptionHandling();
+    $thread = Thread::factory()->create();
+    $reply = Reply::factory()->create(['thread_id' => $thread->id]);
+
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->assertDontSee('Delete')
+        ->call('deleteThisReply', [$reply->id])
+       ->assertStatus(403);
+});
+test('an authorised users can delete replies', function () {
+    LoginAs();
+    $thread = Thread::factory()->create();
+    $reply = Reply::factory()->create(['user_id' => auth()->id(), 'thread_id' => $thread->id]);
+
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->assertSee('Delete')
+        ->call('deleteThisReply', [$reply->id]);
+    $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+});
