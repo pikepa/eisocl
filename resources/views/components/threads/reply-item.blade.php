@@ -27,9 +27,8 @@
 
 
                 <span class="inline-flex rounded-md shadow-sm">
-                    <button wire:click='addFavorite({{ $reply->id }})'
-                        class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-white bg-cyan-600 hover:bg-cyan-500 focus:outline-none focus:border-cyan-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
-                        {{ $reply->isFavorited() ? 'disabled' : '' }} >
+                    <button wire:click='toggleFavorite({{ $reply->id }})'
+                        class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-white bg-cyan-600 hover:bg-cyan-500 focus:outline-none focus:border-cyan-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
                         {{ $reply->favorites_count }} {{ Str::plural('favorite', $reply->favorites_count) }}
                     </button>
                 </span>

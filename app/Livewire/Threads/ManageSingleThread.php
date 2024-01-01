@@ -61,10 +61,15 @@ class ManageSingleThread extends Component
         ]);
     }
 
-    public function addFavorite(Reply $reply)
+    public function toggleFavorite(Reply $reply)
     {
         if (auth()->check()) {
-            return $reply->favorite();
+            if($reply->isFavorited())
+            { 
+                return $reply->unfavorite();
+            }else{
+                return $reply->favorite();
+            }
         } else {
             return redirect()->to('/login');
         }
