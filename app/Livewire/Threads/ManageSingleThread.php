@@ -64,10 +64,9 @@ class ManageSingleThread extends Component
     public function toggleFavorite(Reply $reply)
     {
         if (auth()->check()) {
-            if($reply->isFavorited())
-            { 
+            if ($reply->isFavorited()) {
                 return $reply->unfavorite();
-            }else{
+            } else {
                 return $reply->favorite();
             }
         } else {

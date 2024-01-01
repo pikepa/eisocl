@@ -66,3 +66,11 @@ test('a user can filter threads according to a channel', function () {
                 $threadWithNoReplies->title,
             ]);
     });
+    test('a user can filter threads by those that are unanswered', function () {
+        $threadWithAnswer = Thread::factory()->create();
+        $reply = Reply::factory()->create(['thread_id' => $threadWithAnswer->id]);
+
+        $this->get('/threads?unanswered=1')
+        ->assertSee($this->thread->title)
+        ->assertDontSee($threadWithAnswer->title);
+    });

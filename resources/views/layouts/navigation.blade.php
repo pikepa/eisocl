@@ -19,6 +19,7 @@
                             <a href="/threads/?by={{ auth()->user()->name }}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">My Threads</a>
                             @endauth
                             <a href="/threads/?popular=1" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">By Popularity</a>
+                            <a href="/threads/?unanswered=1" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Unanswered Threads</a>
                         </x-select-dropdown>
                     </div>
                     @auth

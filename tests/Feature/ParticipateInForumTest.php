@@ -12,6 +12,7 @@ test('an authenticated user may participate in Forum Threads', function () {
         ->set('newReply', 'foo too')
         ->call('addThisReply');
     $this->assertTrue(Reply::whereBody('foo too')->exists());
+    $this->assertEquals(1, $thread->fresh()->replies_count);
 });
 
 test('a guest may not reply to Forum Threads', function () {
@@ -52,6 +53,7 @@ test('an authorised users can delete replies', function () {
         ->assertSee('Delete')
         ->call('deleteThisReply', [$reply->id]);
     $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    $this->assertEquals(0, $thread->fresh()->replies_count);
 });
 test('an authorised user can Edit the body of a reply', function () {
     LoginAs();

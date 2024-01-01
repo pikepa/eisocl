@@ -6,7 +6,7 @@ use App\Models\User;
 
 class ThreadFilters extends Filters
 {
-    protected $filters = ['by', 'popular'];
+    protected $filters = ['by', 'popular', 'unanswered'];
 
     protected function by($username)
     {
@@ -19,5 +19,11 @@ class ThreadFilters extends Filters
     {
         // note the re-order to overide the default 'latest' on the get
         return $this->builder->reOrder('replies_count', 'desc');
+    }
+
+    protected function unanswered()
+    {
+        // note the re-order to overide the default 'latest' on the get
+        return $this->builder->where('replies_count', 0);
     }
 }
