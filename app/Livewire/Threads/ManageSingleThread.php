@@ -12,7 +12,7 @@ class ManageSingleThread extends Component
 {
     public $thread;
 
-    #[Validate('required|min:3|max:250', as: 'body')]
+    #[Validate('required|min:3|max:2000', as: 'body')]
     public $newReply;
 
     public function mount($thread)

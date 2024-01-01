@@ -29,7 +29,7 @@ it('tests the reply validation rules', function (string $field, mixed $value, st
         ->assertHasErrors([$field => $rule]);
 })->with([
     'body is null' => ['newReply', null, 'required'],
-    'body is too long' => ['newReply', str_repeat('*', 251), 'max'],
+    'body is too long' => ['newReply', str_repeat('*', 2001), 'max'],
     'body is too short' => ['newReply', str_repeat('*', 2), 'min'],
 ]);
 

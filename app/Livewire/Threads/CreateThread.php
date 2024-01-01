@@ -12,7 +12,7 @@ class CreateThread extends Component
     #[Validate('required|min:3|max:75', as: 'title')]
     public $newThreadTitle = '';
 
-    #[Validate('required|min:10|max:250', as: 'body')]
+    #[Validate('required|min:10|max:2500', as: 'body')]
     public $newThreadBody = '';
 
     #[Validate('required', as: 'channel_id')]

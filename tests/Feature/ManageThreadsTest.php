@@ -37,7 +37,7 @@ it('tests the thread validation rules', function (string $field, mixed $value, s
     'title is too long' => ['newThreadTitle', str_repeat('*', 201), 'max'],
     'title is too short' => ['newThreadTitle', str_repeat('*', 2), 'min'],
     'body is null' => ['newThreadBody', null, 'required'],
-    'body is too long' => ['newThreadBody', str_repeat('*', 251), 'max'],
+    'body is too long' => ['newThreadBody', str_repeat('*', 2501), 'max'],
     'body is too short' => ['newThreadBody', str_repeat('*', 2), 'min'],
 ]);
 
