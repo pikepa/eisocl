@@ -33,6 +33,9 @@
                     <button class="max-h-16 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                         wire:click="addThisReply">Save</button>
                 </div>
+                @if($errors->has('newReply'))
+                <span class="text-sm text-red-600 font-semibold">{{ $errors->first('newReply') }}</span>
+                @endif
             </x-containers.reply-body>
             @endauth
         </div>

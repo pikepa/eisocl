@@ -12,12 +12,27 @@ class ManageSingleThread extends Component
 {
     public $thread;
 
+    public $replyEdit;
+
     #[Validate('required|min:3|max:2000', as: 'body')]
     public $newReply;
 
     public function mount($thread)
     {
         $this->thread = Thread::find($thread);
+    }
+
+    public function editReply(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $this->replyEdit = $reply->body;
+    }
+
+    public function saveEdit(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->body = $this->replyEdit;
+        $reply->update();
     }
 
     public function addThisReply()

@@ -53,3 +53,17 @@ test('an authorised users can delete replies', function () {
         ->call('deleteThisReply', [$reply->id]);
     $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
 });
+test('an authorised user can Edit the body of a reply', function () {
+    LoginAs();
+    $thread = Thread::factory()->create();
+    $reply = Reply::factory()->create(['user_id' => auth()->id(), 'thread_id' => $thread->id]);
+
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+        ->assertSee('Edit')
+        ->call('editReply', [$reply->id])
+        ->assertSee('Save')
+        ->assertSee($reply->body)
+        ->set('replyEdit', 'Adjusted Reply')
+        ->call('saveEdit', [$reply->id]);
+    $this->assertDatabaseHAs('replies', ['id' => $reply->id, 'body' => 'Adjusted Reply']);
+});
