@@ -79,6 +79,5 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists();
-
     }
 }
