@@ -46,6 +46,7 @@
                         <span class="text-blue-500"><a href="/activities/{{ $thread->creator->id }}">{{ $thread->creator->name }}</a></span> 
                         , and currently has {{ $thread->replies_count }} {{ Str::plural('comment',$thread->replies_count) }}
                     </p>
+                    <livewire:threads.subscribe-button :thread='$thread'/>
                 </div>
             </div>
 
