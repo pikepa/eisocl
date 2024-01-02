@@ -23,9 +23,11 @@
             <div class="p-4">
                 {{ $replies->links() }}
             </div>
+            @guest
             <div class="mx-auto text-center">
-                <h1 >***  In order to reply, please go to Dashboard then login / register  ***</h1>
+                <h1>*** In order to reply, please go to Dashboard then login / register ***</h1>
             </div>
+            @endguest
             <!-- Add a New Reply -->
             @auth
             <x-containers.reply-body>
