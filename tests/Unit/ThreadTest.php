@@ -32,3 +32,25 @@ test('A thread belongs to a channel', function () {
     $thread = Thread::factory()->create();
     $this->assertInstanceOf(Channel::class, $thread->channel);
 });
+
+test('A thread can be subscribed to', function () {
+    //given we have a thread
+    $thread = Thread::factory()->create();
+    // when the user subscribes to the thread
+    $thread->subscribe($userId = 1);
+    // Then we should be able to fetch all threads the user is subscribeed to
+    $this->assertEquals(
+        1,
+        $thread->subscriptions()->where('user_id', $userId)->count());
+});
+
+test('a thread can be unsubscribed from', function () {
+    // given we have a thread
+    $thread = Thread::factory()->create();
+    // and a user who is subscribed to the thread
+    $thread->subscribe($userId = 1);
+    // now wants to be unsubscribed
+    $thread->unsubscribe($userId);
+    // should result in a count of zero subscriptions
+    $this->assertCount(0, $thread->subscriptions);
+});
