@@ -13,6 +13,7 @@ class ManageSingleThread extends Component
     public $thread;
 
     public $replyEdit;
+    public $replyCount;
 
     #[Validate('required|min:3|max:2000', as: 'body')]
     public $newReply;
