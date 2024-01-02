@@ -74,3 +74,15 @@ test('a user can filter threads according to a channel', function () {
         ->assertSee($this->thread->title)
         ->assertDontSee($threadWithAnswer->title);
     });
+
+    test('the number of comments on the single thread page is updated when a new reply is added', function () {
+        $this->get(route('threads.single', [$this->thread->channel, $this->thread->id]))
+        ->assertOk()
+        ->assertSee('0 comments');
+        Reply::factory()->create([]);
+
+        $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
+        $this->get(route('threads.single', [$this->thread->channel, $this->thread->id]))
+        ->assertOk()
+        ->assertSee('1 comment');
+    });

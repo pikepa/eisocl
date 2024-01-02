@@ -43,12 +43,14 @@ class ManageSingleThread extends Component
             'user_id' => Auth::user()->id,
         ]);
         $this->reset('newReply');
+        $this->thread->refresh();
     }
 
     public function deleteThisReply(Reply $reply)
     {
         $this->authorize('update', $reply);
         $reply->delete();
+        $this->thread->refresh();
 
         return back();
     }
