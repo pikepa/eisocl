@@ -24,12 +24,11 @@ class SubscribeButton extends Component
             $this->buttonTitle = 'Unsubscribe';
             $this->active = true;
 
-            return;
+            return $this;
         }
         $this->thread->unsubscribe(auth()->user()->id);
         $this->buttonTitle = 'Subscribe';
         $this->active = false;
-
     }
 
     public function render()

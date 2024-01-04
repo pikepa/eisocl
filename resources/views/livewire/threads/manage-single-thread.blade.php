@@ -25,7 +25,7 @@
             </div>
             @guest
             <div class="mx-auto text-center">
-                <h1>*** In order to reply, please go to Dashboard then login / register ***</h1>
+                <h1>*** In order to reply, please go to Dashboard and either login or register ***</h1>
             </div>
             @endguest
             <!-- Add a New Reply -->

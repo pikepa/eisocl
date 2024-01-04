@@ -4,7 +4,7 @@ use App\Livewire\Threads\SubscribeButton;
 use App\Models\Thread;
 use Livewire\Livewire;
 
-test('A guest user user can not see the submit/unsubmit button', function () {
+test('A guest user can not see the submit/unsubmit button', function () {
     $thread = Thread::factory()->create();
 
     $this->get(route('threads.single', [$thread->channel, $thread->id]))
