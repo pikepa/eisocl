@@ -16,12 +16,17 @@ class ShowUserNotifications extends Component
     public function render()
     {
         return <<<'HTML'
-        <div>
-            I'm here
-            {{ $notifications->count() }}
-            @foreach ($notifications as $notification)
-                {{ $notification->id }}
-            @endforeach
+        <div >
+            <div class='ml-12 mt-4'>
+              <h1>Notification count {{ $notifications->count() }}</h1> 
+            </div>
+            <div class='ml-12 mt-4'>
+                @foreach ($notifications as $notification)
+                <div>
+                     {{ $notification->data['message'] }}
+                </div>
+                @endforeach
+            </div>
         </div>
         HTML;
     }

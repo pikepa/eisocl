@@ -38,10 +38,11 @@ class ManageSingleThread extends Component
     public function addThisReply()
     {
         $this->validate();
-        $this->thread->replies()->create([
+        $reply = [
             'body' => $this->newReply,
             'user_id' => Auth::user()->id,
-        ]);
+        ];
+        $this->thread->addReply($reply);
         $this->reset('newReply');
         $this->thread->refresh();
     }

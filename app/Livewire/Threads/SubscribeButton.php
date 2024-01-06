@@ -10,11 +10,15 @@ class SubscribeButton extends Component
 
     public $buttonTitle = 'Subscribe';
 
-    public $active = 'false';
+    public $active = false;
 
     public function mount($thread)
     {
         $this->thread = $thread;
+        if ($this->thread->IsSubscribedTo) {
+            $this->buttonTitle = 'Unsubscribe';
+            $this->active = true;
+        }
     }
 
     public function subscribe()
@@ -37,10 +41,9 @@ class SubscribeButton extends Component
         <div class='mt-4'>
         <button 
                     wire:click="subscribe({{ $thread->id }})" 
-                    class="@if( $active == false ) bg-green-600 @else bg-blue-600 @endif 
-                      font-semibold inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 rounded text-white  focus:outline-none transition ease-in-out duration-150">
+                    class="bg-transparent text-blue-700 font-semibold py-2 px-4 border border-blue-500  rounded">
                     {{ $buttonTitle }}
-                </button>
+                </button> 
         </div>
         HTML;
     }

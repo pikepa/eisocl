@@ -33,8 +33,9 @@ test('a user can fetch their unread notifications', function () {
         'body' => 'Some reply here',
     ]);
     Livewire::test(ShowUserNotifications::class)
-     ->assertStatus(200);
-})->toDo();
+     ->assertStatus(200)
+     ->assertSee('Temporary placeholder');
+});
 
 test('a user can mark a notification as read', function () {
     $this->thread->addReply([
