@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Notifications\ShowUserNotifications;
 use App\Livewire\Threads\CreateThread;
 use App\Livewire\Threads\ManageSingleThread;
 use App\Livewire\Threads\ManageThreads;
@@ -11,6 +12,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/test', ShowUserNotifications::class);
 Route::get('/threads', ManageThreads::class)->name('threads.index');
 Route::get('/threads/create', CreateThread::class)->name('threads.create');
 Route::get('/threads/{channel}', ManageThreads::class)->name('threads.channel');
