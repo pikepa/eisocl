@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use App\Traits\RecordsActivity;
-use App\Events\ThreadHasNewReply;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Thread extends Model
 {
@@ -40,6 +39,7 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
         $this->notifySubscribers($reply);
+
         return $reply;
     }
 
@@ -47,8 +47,8 @@ class Thread extends Model
     {
         $this->subscriptions
         ->where('user_id', '!=', $reply->user_id)
-        ->each->notify($reply);  
-       }
+        ->each->notify($reply);
+    }
 
     public function scopefilter($query, $filters)
     {

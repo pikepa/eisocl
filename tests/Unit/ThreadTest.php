@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\User;
-use App\Models\Thread;
 use App\Models\Channel;
+use App\Models\Thread;
+use App\Models\User;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Support\Facades\Notification;
 
@@ -30,17 +30,15 @@ test('a thread can add a reply', function () {
     $this->assertCount(1, $this->thread->replies);
 });
 
-test('a thread notifies all registered subscribers when a reply is added', function () 
-{
+test('a thread notifies all registered subscribers when a reply is added', function () {
     Notification::fake();
     loginAs();
     $this->thread->subscribe()->addReply([
         'body' => 'Foobar',
         'user_id' => 999,
     ]);
-    Notification::assertSentTo (auth()->user(), ThreadWasUpdated::class);
+    Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
 });
-
 
 test('A thread belongs to a channel', function () {
     $thread = Thread::factory()->create();
