@@ -34,7 +34,9 @@ test('a user can fetch their unread notifications', function () {
     ]);
     Livewire::test(ShowUserNotifications::class)
      ->assertStatus(200)
-     ->assertSee('Temporary placeholder');
+     //as part of the dropdown for notifications should see the follwing.
+     ->assertSee($this->thread->title)
+     ->assertSee($this->thread->path());
 });
 
 test('a user can mark a notification as read', function () {
