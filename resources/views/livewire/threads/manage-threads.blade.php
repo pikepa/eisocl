@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-2xl text-center font-semibold text-blue-800 leading-tight">
             {{ __('Ephraim Island Social Club Forum') }}
         </h2>
     </x-slot>
