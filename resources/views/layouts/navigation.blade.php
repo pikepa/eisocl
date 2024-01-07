@@ -35,18 +35,21 @@
                             @endforeach
                         </x-select-dropdown>
                     </div>
-                    <x-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')">
-                        {{ __('Events') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
 
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @guest
+                <div>
+                    <a href="{{ route('login') }}"
+                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                        in</a>
+                    <a href="{{ route('register') }}"
+                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                </div>
+                @endguest
                 @auth
                 <livewire:notifications.show-user-notifications />
                 <x-dropdown align="right" width="48">
@@ -103,13 +106,7 @@
             <x-responsive-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')" >
                 {{ __('Forum') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('threads.index')" :active="request()->routeIs('threads')" >
-                {{ __('Events') }}
-            </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" >
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
 
 
         </div>
