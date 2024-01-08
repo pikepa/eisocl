@@ -28,12 +28,15 @@ class ManageSingleThread extends Component
     public function editReply(Reply $reply)
     {
         $this->authorize('update', $reply);
+
         $this->replyEdit = $reply->body;
     }
 
     public function saveEdit(Reply $reply)
     {
         $this->authorize('update', $reply);
+        $spam = new Spam;
+        $spam->detect($this->replyEdit);
         $reply->body = $this->replyEdit;
         $reply->update();
     }
