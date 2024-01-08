@@ -4,6 +4,8 @@ use App\Models\Channel;
 use App\Models\Thread;
 use App\Models\User;
 use App\Notifications\ThreadWasUpdated;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Notification;
 
 beforeEach(function () {
@@ -78,3 +80,41 @@ test('a thread can check if an authenticated user has read all replies', functio
         $this->assertFalse($thread->hasUpdatesFor($user));
     });
 });
+
+test('leaving a reply marks thread as unread', function () {
+    loginAs();
+
+    $user = auth()->user();
+
+    $user->read($this->thread);
+
+    Carbon::setTestNow(Carbon::now()->add(CarbonInterval::days(1)));
+
+    $this->thread->addReply([
+        'user_id' => 999,
+        'body' => 'Some reply here',
+    ]);
+
+    $this->thread = $this->thread->fresh();
+
+    $this->assertTrue($this->thread->hasUpdatesFor($user));
+});
+
+    test('adding a reply updates the thread updatedat_field', function () {
+        $one = $this->thread->updated_at;
+
+        Carbon::setTestNow(Carbon::now()->add(CarbonInterval::days(1)));
+
+        $this->thread->addReply([
+            'user_id' => 999,
+            'body' => 'Some reply here',
+        ]);
+
+        $two = $this->thread->fresh()->updated_at;
+
+        $this->assertNotTrue($one->equalTo($two));
+    });
+    afterAll(function () {
+        // Clean testing data after all tests run...
+        Carbon::setTestNow();
+    });
