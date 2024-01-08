@@ -3,7 +3,13 @@
         <div class="  text-gray-900">
             <div class="flex flex-row justify-between items-center ">
                 <div class="  ">
-                    <a class="url" href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                    <a class="url" href="{{ $thread->path() }}">
+                        @if (auth()->user() && $thread->hasUpdatesFor(auth()->user()))
+                        <span class="font-bold text-blue-800">{{ $thread->title }}</span>
+                        @else
+                        {{ $thread->title }}
+                        @endif
+                    </a>
                 </div>
                 <div class="text-sm mr-4 p-2 ">
                     <a class="url" href="{{ $thread->path() }}">{{ $thread->replies_count }} {{ Str::plural('reply',

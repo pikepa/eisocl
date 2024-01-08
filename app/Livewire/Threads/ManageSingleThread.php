@@ -58,6 +58,11 @@ class ManageSingleThread extends Component
 
     public function render()
     {
+        //record that the user visited this page.
+        if (auth()->check()) {
+            auth()->user()->read($this->thread);
+        }
+
         return view('livewire.threads.manage-single-thread', [
             'thread' => $this->thread,
             'replies' => $this->thread->replies()->paginate(10),

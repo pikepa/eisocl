@@ -66,3 +66,15 @@ test('a thread can be unsubscribed from', function () {
     // should result in a count of zero subscriptions
     $this->assertCount(0, $thread->subscriptions);
 });
+
+test('a thread can check if an authenticated user has read all replies', function () {
+    loginAs();
+    $thread = Thread::factory()->create();
+    //note tap(auth()->user() to simplify all threee lines)
+    tap(auth()->user(), function ($user) use ($thread) {
+        $this->assertTrue($thread->hasUpdatesFor($user));
+        //simulate visit to Thread
+        $user->read($thread);
+        $this->assertFalse($thread->hasUpdatesFor($user));
+    });
+});
