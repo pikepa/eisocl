@@ -10,7 +10,6 @@
             <div class=" bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class=" pl-6 p-4 pb-4 border-b-2 border-b-gray-100 text-gray-700">
                     {{ $thread->body }}
-
                 </div>
             </div>
             <h1 class="pl-6 pt-2  font-semibold">
@@ -20,9 +19,7 @@
             @foreach($replies as $reply)
             <x-threads.reply-item :reply="$reply" />
             @endforeach
-            <div class="p-4">
-                {{ $replies->links() }}
-            </div>
+ 
             @guest
             <div class="mx-auto text-center">
                 <h1>*** In order to reply, please go to Dashboard and either login or register ***</h1>

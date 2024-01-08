@@ -9,9 +9,10 @@ test('an authenticated user may participate in Forum Threads', function () {
     loginAs();
     $thread = Thread::factory()->create();
     Livewire::test(ManageSingleThread::class, [$thread->id])
-        ->set('newReply', 'foo too')
+        ->assertOk()
+        ->set('newReply', 'this is a reply')
         ->call('addThisReply');
-    $this->assertTrue(Reply::whereBody('foo too')->exists());
+    $this->assertTrue(Reply::whereBody('this is a reply')->exists());
     $this->assertEquals(1, $thread->fresh()->replies_count);
 });
 
@@ -69,3 +70,13 @@ test('an authorised user can Edit the body of a reply', function () {
         ->call('saveEdit', [$reply->id]);
     $this->assertDatabaseHAs('replies', ['id' => $reply->id, 'body' => 'Adjusted Reply']);
 });
+
+test('that replies containing spam may not be created', function () {
+    loginAs();
+    $thread = Thread::factory()->create();
+
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+    ->assertOk()
+    ->set('newReply', 'Yahoo Customer Support')
+    ->call('addThisReply');
+})->throws(Exception::class, 'Your reply contains Spam');

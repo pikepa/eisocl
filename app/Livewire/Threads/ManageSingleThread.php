@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Threads;
 
+use App\Inspections\Spam;
 use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,8 @@ class ManageSingleThread extends Component
 
     #[Validate('required|min:3|max:2000', as: 'body')]
     public $newReply;
+
+    public $spam;
 
     public function mount($thread)
     {
@@ -38,6 +41,9 @@ class ManageSingleThread extends Component
     public function addThisReply()
     {
         $this->validate();
+        $spam = new Spam;
+        $spam->detect($this->newReply);
+
         $reply = [
             'body' => $this->newReply,
             'user_id' => Auth::user()->id,
@@ -65,7 +71,7 @@ class ManageSingleThread extends Component
 
         return view('livewire.threads.manage-single-thread', [
             'thread' => $this->thread,
-            'replies' => $this->thread->replies()->paginate(10),
+            'replies' => $this->thread->replies()->get(),
         ]);
     }
 

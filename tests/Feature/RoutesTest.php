@@ -16,6 +16,7 @@ test('The threads page is loaded with the threads.index route', function () {
         ->assertSeeLivewire(ManageThreads::class)
         ->assertSee('Ephraim Island Social Club Forum');
 });
+
 test('The single thread page is loaded with the threads.single route', function () {
     loginAs();
     $thread = Thread::factory()->create();
