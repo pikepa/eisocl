@@ -43,9 +43,7 @@ class ManageSingleThread extends Component
 
     public function addThisReply()
     {
-        $this->validate();
-        $spam = new Spam;
-        $spam->detect($this->newReply);
+        $this->validateReply();
 
         $reply = [
             'body' => $this->newReply,
@@ -54,6 +52,12 @@ class ManageSingleThread extends Component
         $this->thread->addReply($reply);
         $this->reset('newReply');
         $this->thread->refresh();
+    }
+
+    protected function validateReply()
+    {
+        $this->validate();
+        resolve(Spam::class)->detect($this->newReply);
     }
 
     public function deleteThisReply(Reply $reply)

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Threads;
 
+use App\Inspections\Spam;
 use App\Models\Thread;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
@@ -25,7 +26,8 @@ class CreateThread extends Component
 
     public function addNewThread()
     {
-        $this->validate();
+        $this->validateThread();
+
         $newThread = Thread::create([
             'title' => $this->newThreadTitle,
             'user_id' => Auth::user()->id,
@@ -34,5 +36,11 @@ class CreateThread extends Component
         ]);
         $this->reset();
         $this->redirect($newThread->path());
+    }
+
+    protected function validateThread()
+    {
+        $this->validate();
+        resolve(Spam::class)->detect($this->newThreadBody);
     }
 }
