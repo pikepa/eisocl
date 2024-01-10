@@ -78,5 +78,6 @@ test('that replies containing spam may not be created', function () {
     Livewire::test(ManageSingleThread::class, [$thread->id])
     ->assertOk()
     ->set('newReply', 'Yahoo Customer Support')
-    ->call('addThisReply');
-})->throws(Exception::class, 'Your reply contains Spam');
+    ->call('addThisReply')
+    ->assertHasErrors('newReply');
+});

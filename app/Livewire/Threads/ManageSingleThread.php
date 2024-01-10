@@ -2,23 +2,51 @@
 
 namespace App\Livewire\Threads;
 
-use App\Inspections\Spam;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Rules\Spamfree;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class ManageSingleThread extends Component
 {
     public $thread;
 
+    public $exceptionError;
+
     public $replyEdit;
 
-    #[Validate('required|min:3|max:2000', as: 'body')]
     public $newReply;
 
     public $spam;
+
+    public function rules()
+    {
+        return [
+            'newReply' => ['required', 'min:5', 'max:2000', new Spamfree],
+            'replyEdit' => ['required', 'min:5', 'max:2000', new Spamfree],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'newReply.required' => 'The :attribute is missing.',
+            'newReply.min' => 'The :attribute is too short (Min 5 char).',
+            'newReply.max' => 'The :attribute is too long (Max 2000).',
+            'replyEdit.required' => 'The :attribute is missing.',
+            'replyEdit.min' => 'The :attribute is too short (Min 5 char).',
+            'replyEdit.max' => 'The :attribute is too long (Max 2000).',
+        ];
+    }
+
+    public function validationAttributes()
+    {
+        return [
+            'newReply' => 'reply',
+            'replyEdit' => 'reply',
+        ];
+    }
 
     public function mount($thread)
     {
@@ -28,23 +56,21 @@ class ManageSingleThread extends Component
     public function editReply(Reply $reply)
     {
         $this->authorize('update', $reply);
-
         $this->replyEdit = $reply->body;
     }
 
     public function saveEdit(Reply $reply)
     {
         $this->authorize('update', $reply);
-        $spam = new Spam;
-        $spam->detect($this->replyEdit);
+        $this->validateOnly('replyEdit');
         $reply->body = $this->replyEdit;
         $reply->update();
+        $this->reset('replyEdit');
     }
 
     public function addThisReply()
     {
-        $this->validateReply();
-
+        $this->validateOnly('newReply');
         $reply = [
             'body' => $this->newReply,
             'user_id' => Auth::user()->id,
@@ -52,12 +78,6 @@ class ManageSingleThread extends Component
         $this->thread->addReply($reply);
         $this->reset('newReply');
         $this->thread->refresh();
-    }
-
-    protected function validateReply()
-    {
-        $this->validate();
-        resolve(Spam::class)->detect($this->newReply);
     }
 
     public function deleteThisReply(Reply $reply)

@@ -2,18 +2,18 @@
 
 namespace App\Livewire\Threads;
 
-use App\Inspections\Spam;
 use App\Models\Thread;
+use App\Rules\Spamfree;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CreateThread extends Component
 {
-    #[Validate('required|min:3|max:75', as: 'title')]
+    #[Validate('required|min:3|max:75', new Spamfree, as: 'title', )]
     public $newThreadTitle = '';
 
-    #[Validate('required|min:10|max:2500', as: 'body')]
+    #[Validate('required|min:10|max:2500', new Spamfree, as: 'body')]
     public $newThreadBody = '';
 
     #[Validate('required', as: 'channel_id')]
@@ -26,7 +26,7 @@ class CreateThread extends Component
 
     public function addNewThread()
     {
-        $this->validateThread();
+        $this->validate();
 
         $newThread = Thread::create([
             'title' => $this->newThreadTitle,
@@ -36,11 +36,5 @@ class CreateThread extends Component
         ]);
         $this->reset();
         $this->redirect($newThread->path());
-    }
-
-    protected function validateThread()
-    {
-        $this->validate();
-        resolve(Spam::class)->detect($this->newThreadBody);
     }
 }
