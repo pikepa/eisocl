@@ -29,5 +29,7 @@ class Spamfree implements ValidationRule
     protected $keywords = [
         'yahoo customer support',
         'hamas',
+        'Palestine',
+        'fuck off',
     ];
 }
