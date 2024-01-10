@@ -70,6 +70,8 @@ class ManageSingleThread extends Component
 
     public function addThisReply()
     {
+        $this->authorize('create', new Reply);
+        
         $this->validateOnly('newReply');
         $reply = [
             'body' => $this->newReply,

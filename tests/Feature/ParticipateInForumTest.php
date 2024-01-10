@@ -68,7 +68,7 @@ test('an authorised user can Edit the body of a reply', function () {
         ->assertSee($reply->body)
         ->set('replyEdit', 'Adjusted Reply')
         ->call('saveEdit', [$reply->id]);
-    $this->assertDatabaseHAs('replies', ['id' => $reply->id, 'body' => 'Adjusted Reply']);
+    $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => 'Adjusted Reply']);
 });
 
 test('that replies containing spam may not be created', function () {
@@ -81,3 +81,24 @@ test('that replies containing spam may not be created', function () {
     ->call('addThisReply')
     ->assertHasErrors('newReply');
 });
+
+test('users may only reply a maximum of once per minute', function () {
+    loginAs();
+    $this->withoutExceptionhandling();
+    $thread = Thread::factory()->create();
+
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+    ->assertOk()
+    ->set('newReply', 'My simple Reply')
+    ->call('addThisReply')
+    ->assertSee('My simple Reply');
+
+    $this->assertDatabaseCount('replies', 1);
+
+    Livewire::test(ManageSingleThread::class, [$thread->id])
+    ->assertOk()
+    ->set('newReply', 'My simple Reply')
+    ->call('addThisReply');    
+    $this->assertDatabaseCount('replies', 1);
+})->throws(Exception::class, 'This action is unauthorized.');
+

@@ -1,8 +1,9 @@
 <?php
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
-use App\Models\User;
 
 test('it has an owner', function () {
     $reply = Reply::factory()->create();
@@ -18,3 +19,12 @@ test('it has a path', function () {
     $reply = Reply::factory()->create();
     $this->assertEquals($reply->thread->path().'#reply-'.$reply->id, $reply->path());
 });
+
+it('knows if it was just published', function () {
+    $reply = Reply::factory()->create();
+    $this->assertTrue($reply->wasJustPublished());
+    $reply->created_at = Carbon::now()->subMonth();
+    $this->assertFalse($reply->wasJustPublished());
+});
+
+

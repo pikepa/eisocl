@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\Favoritable;
 use App\Traits\RecordsActivity;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reply extends Model
 {
@@ -35,6 +36,11 @@ class Reply extends Model
     public function thread(): BelongsTo
     {
         return $this->belongsTo(Thread::class);
+    }
+
+    public function wasJustPublished()
+    {
+        return $this->created_at->gt(Carbon::now()->subMinute());
     }
 
     public function path()
