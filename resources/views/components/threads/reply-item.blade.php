@@ -28,7 +28,11 @@
                 <span class="inline-flex rounded-md shadow-sm">
                     <button wire:click='toggleFavorite({{ $reply->id }})'
                         class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-white bg-cyan-600 hover:bg-cyan-500 focus:outline-none focus:border-cyan-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
-                        {{ $reply->favorites_count }} {{ Str::plural('favorite', $reply->favorites_count) }}
+                         <span class="mr-1"> {{ $reply->favorites_count }}</span>
+                         <i class="fa-regular fa-heart"></i> 
+                         <span class="m-1">'s</span>
+
+
                     </button>
                 </span>
             </div>
@@ -42,7 +46,7 @@
             <span class=" inline-flex rounded-md shadow-sm">
                 <button 
                     wire:click="saveEdit({{ $reply->id }})" 
-                   
+                    x-on:click="open = ! open"
                     class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
                     Save
                 </button>

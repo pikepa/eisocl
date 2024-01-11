@@ -63,9 +63,12 @@ class ManageSingleThread extends Component
     public function saveEdit(Reply $reply)
     {
         $this->authorize('update', $reply);
+
         $this->validateOnly('replyEdit');
         $reply->body = $this->replyEdit;
         $reply->update();
+        $this->dispatch('notify', 'The reply edit was successful.');
+
         $this->reset('replyEdit');
     }
 
