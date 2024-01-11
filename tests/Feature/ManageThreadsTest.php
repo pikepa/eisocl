@@ -40,6 +40,17 @@ it('tests the thread validation rules', function (string $field, mixed $value, s
     'body is too long' => ['newThreadBody', str_repeat('*', 2501), 'max'],
     'body is too short' => ['newThreadBody', str_repeat('*', 2), 'min'],
 ]);
+test('that a success message is given when a thread is added', function () {
+    loginAs();
+    $thread = Thread::factory()->make();
+    Livewire::test(CreateThread::class)
+        ->set('newThreadTitle', $thread->title)
+        ->set('newThreadBody', $thread->body)
+        ->set('channelId', $thread->channel_id)
+        ->call('addNewThread')
+        ->assertDispatched('notify');
+});
+    
 
 test('Unauthorised Users may not delete threads', function () {
     $thread = Thread::factory()->create();
@@ -60,8 +71,7 @@ test('an authorised user can delete their thread', function () {
     Livewire::test(ManageThreads::class)
         ->assertSee('Delete Thread')
         ->call('deleteThread', $thread->id)
-        ->assertSuccessful()
-        ->assertRedirect('/threads/?by='.$thread->creator->name);
+        ->assertSuccessful();
 
     $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
     $this->assertDatabaseMissing('replies', ['id' => $reply->id]);

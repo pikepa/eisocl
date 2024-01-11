@@ -41,7 +41,7 @@
             </x-containers.reply-body>
             @endauth
         </div>
-        <div class="w-1/3">
+        <div class="w-1/3 flex flex-col justify-between">
             <div class="mt-4 m-2 bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class=" pl-6 p-4 pb-4 border-b-2 border-b-gray-100 text-gray-700">
                     <p> This thread was published {{ $thread->created_at->diffForHumans() }} by
@@ -55,7 +55,7 @@
                     @endauth
                 </div>
             </div>
-
+            <x-notification/>
         </div>
     </div>
 

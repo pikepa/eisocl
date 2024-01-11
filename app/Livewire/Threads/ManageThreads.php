@@ -48,7 +48,8 @@ class ManageThreads extends Component
         $thread = Thread::find($thread);
         $this->authorize('update', $thread);
         $thread->delete();
+        $this->dispatch('notify', 'Your thread was deleted');
 
-        return redirect('/threads/?by='.$thread->creator->name);
+        return redirect()->back();
     }
 }

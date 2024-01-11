@@ -1,8 +1,10 @@
 <div>
     <x-slot name="header">
-        <h2 class="text-2xl text-center font-semibold text-blue-800 leading-tight">
+    <div class="relative">
+        <h2 class="ml-12 text-2xl text-left font-semibold text-blue-800 leading-tight">
             {{ __('Ephraim Island Social Club Forum') }}
         </h2>
+    </div>
     </x-slot>
     <!-- main body -->
     <x-containers.main-body>

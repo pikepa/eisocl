@@ -1,17 +1,20 @@
 <?php
 
-use App\Livewire\Threads\ManageSingleThread;
+use Carbon\Carbon;
 use App\Models\Reply;
 use App\Models\Thread;
 use Livewire\Livewire;
+use App\Livewire\Threads\ManageSingleThread;
 
 test('an authenticated user may participate in Forum Threads', function () {
     loginAs();
+    $this->withoutExceptionHandling();
     $thread = Thread::factory()->create();
     Livewire::test(ManageSingleThread::class, [$thread->id])
         ->assertOk()
         ->set('newReply', 'this is a reply')
-        ->call('addThisReply');
+        ->call('addThisReply')
+        ->assertOK();
     $this->assertTrue(Reply::whereBody('this is a reply')->exists());
     $this->assertEquals(1, $thread->fresh()->replies_count);
 });

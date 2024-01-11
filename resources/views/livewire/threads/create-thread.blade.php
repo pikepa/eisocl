@@ -1,7 +1,7 @@
-<x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Create New forum Thread') }}
-    </h2>
+<x-slot name="header" >
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Create New forum Thread') }}
+            </h2>
 </x-slot>
 <x-containers.main-body>
     <div class="py-6 px-4 border-b-2 border-b-gray-100 text-gray-900">

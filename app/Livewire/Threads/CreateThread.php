@@ -47,6 +47,8 @@ class CreateThread extends Component
             'body' => $this->newThreadBody,
         ]);
         $this->reset();
-        $this->redirect($newThread->path());
+        $this->dispatch('notify', 'A new thread was created');
+      //  $this->redirect('/threads');
+
     }
 }

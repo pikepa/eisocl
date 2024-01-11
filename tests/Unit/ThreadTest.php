@@ -100,7 +100,7 @@ test('leaving a reply marks thread as unread', function () {
     $this->assertTrue($this->thread->hasUpdatesFor($user));
 });
 
-    test('adding a reply updates the thread updatedat_field', function () {
+    test('adding a reply updates the thread updatedated_field', function () {
         $one = $this->thread->updated_at;
 
         Carbon::setTestNow(Carbon::now()->add(CarbonInterval::days(1)));

@@ -20,7 +20,7 @@ class ReplyPolicy
     public function create(User $user)
     {
         $lastReply =$user->fresh()->lastReply;
-        if( ! $lastReply) return true;
+        if( ! $lastReply)  return true ;
         return ! $lastReply->wasJustPublished();
     }
 }
