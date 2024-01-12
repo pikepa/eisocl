@@ -2,7 +2,7 @@
  <div x-data="{ open:true}">
     <div x-show="!open">
             <div class="flex flex-row justify-between ">
-                <textarea class="flex-1  rounded" type="text" wire:model="replyEdit" ></textarea>
+                <textarea class="flex-1  rounded" type="text" wire:model="replyEdit" required></textarea>
             </div>
             @if($errors->has('replyEdit'))
             <span class="text-sm text-red-600 font-semibold">{{ $errors->first('replyEdit') }}</span>
