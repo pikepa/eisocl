@@ -26,5 +26,11 @@ it('knows if it was just published', function () {
     $reply->created_at = Carbon::now()->subMonth();
     $this->assertFalse($reply->wasJustPublished());
 });
+it('can detect all mentioned users in the reply body', function () {
+        $reply = Reply::factory()->create([
+            'body' => '@JaneDoe wants to talk to @JohnDoe',
+        ]);
+        $this->assertEquals(['JaneDoe','JohnDoe'], $reply->mentionedUsers());
+});
 
 

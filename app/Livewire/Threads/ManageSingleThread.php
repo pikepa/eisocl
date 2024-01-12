@@ -5,9 +5,8 @@ namespace App\Livewire\Threads;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Rules\Spamfree;
-use Exception;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class ManageSingleThread extends Component
 {
@@ -54,6 +53,21 @@ class ManageSingleThread extends Component
         $this->thread = Thread::find($thread);
     }
 
+    public function addThisReply()
+    {
+        $this->authorize('create', new Reply);
+        $this->validateOnly('newReply');
+        
+        return $this->thread->addreply([
+            'body' => $this->newReply,
+            'user_id' => Auth::user()->id,
+        ])->load('owner');
+
+        $this->reset('newReply');
+        $this->dispatch('notify', 'A new reply was created');
+
+        $this->thread->refresh();
+    }
     public function editReply(Reply $reply)
     {
         $this->authorize('update', $reply);
@@ -70,22 +84,6 @@ class ManageSingleThread extends Component
         $this->dispatch('notify', 'The reply edit was successful.');
 
         $this->reset('replyEdit');
-    }
-
-    public function addThisReply()
-    {
-        $this->authorize('create', new Reply);
-
-        $this->validateOnly('newReply');
-        $reply = [
-            'body' => $this->newReply,
-            'user_id' => Auth::user()->id,
-        ];
-        $this->thread->addReply($reply);
-        $this->reset('newReply');
-        $this->dispatch('notify', 'A new reply was created');
-
-        $this->thread->refresh();
     }
 
     public function deleteThisReply(Reply $reply)
