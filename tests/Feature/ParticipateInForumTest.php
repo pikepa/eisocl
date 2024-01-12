@@ -1,10 +1,9 @@
 <?php
 
-use Carbon\Carbon;
+use App\Livewire\Threads\ManageSingleThread;
 use App\Models\Reply;
 use App\Models\Thread;
 use Livewire\Livewire;
-use App\Livewire\Threads\ManageSingleThread;
 
 test('an authenticated user may participate in Forum Threads', function () {
     loginAs();
@@ -101,7 +100,6 @@ test('users may only reply a maximum of once per minute', function () {
     Livewire::test(ManageSingleThread::class, [$thread->id])
     ->assertOk()
     ->set('newReply', 'My simple Reply')
-    ->call('addThisReply');    
+    ->call('addThisReply');
     $this->assertDatabaseCount('replies', 1);
 })->throws(Exception::class, 'This action is unauthorized.');
-

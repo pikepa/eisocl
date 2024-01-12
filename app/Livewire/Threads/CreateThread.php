@@ -48,7 +48,6 @@ class CreateThread extends Component
         ]);
         $this->reset();
         $this->dispatch('notify', 'A new thread was created');
-      //  $this->redirect('/threads');
-
+        //  $this->redirect('/threads');
     }
 }

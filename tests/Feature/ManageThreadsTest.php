@@ -50,7 +50,6 @@ test('that a success message is given when a thread is added', function () {
         ->call('addNewThread')
         ->assertDispatched('notify');
 });
-    
 
 test('Unauthorised Users may not delete threads', function () {
     $thread = Thread::factory()->create();

@@ -2,11 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Models\User;
 use App\Events\ThreadReceivedNewReply;
+use App\Models\User;
 use App\Notifications\YouWereMentioned;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NotifyMentionedUsers
 {
@@ -28,6 +26,5 @@ class NotifyMentionedUsers
             ->each(function ($user) use ($event) {
                 $user->notify(new YouWereMentioned($event->reply));  //notifies each user
             });
-
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
+use Carbon\Carbon;
 
 test('it has an owner', function () {
     $reply = Reply::factory()->create();
@@ -27,10 +27,8 @@ it('knows if it was just published', function () {
     $this->assertFalse($reply->wasJustPublished());
 });
 it('can detect all mentioned users in the reply body', function () {
-        $reply = Reply::factory()->create([
-            'body' => '@JaneDoe wants to talk to @JohnDoe',
-        ]);
-        $this->assertEquals(['JaneDoe','JohnDoe'], $reply->mentionedUsers());
+    $reply = Reply::factory()->create([
+        'body' => '@JaneDoe wants to talk to @JohnDoe',
+    ]);
+    $this->assertEquals(['JaneDoe', 'JohnDoe'], $reply->mentionedUsers());
 });
-
-

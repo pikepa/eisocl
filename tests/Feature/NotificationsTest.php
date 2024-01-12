@@ -24,6 +24,7 @@ test('a notification is prepared when a subscribed thread receives a new reply t
         'user_id' => User::factory()->create()->id,
         'body' => 'Some new reply here',
     ]);
+
     $this->assertCount(1, auth()->user()->fresh()->unreadNotifications);
 });
 

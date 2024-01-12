@@ -5,8 +5,8 @@ namespace App\Livewire\Threads;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Rules\Spamfree;
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class ManageSingleThread extends Component
 {
@@ -57,7 +57,7 @@ class ManageSingleThread extends Component
     {
         $this->authorize('create', new Reply);
         $this->validateOnly('newReply');
-        
+
         return $this->thread->addreply([
             'body' => $this->newReply,
             'user_id' => Auth::user()->id,
@@ -68,6 +68,7 @@ class ManageSingleThread extends Component
 
         $this->thread->refresh();
     }
+
     public function editReply(Reply $reply)
     {
         $this->authorize('update', $reply);

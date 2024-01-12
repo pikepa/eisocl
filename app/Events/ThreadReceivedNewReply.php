@@ -8,7 +8,9 @@ use Illuminate\Queue\SerializesModels;
 class ThreadReceivedNewReply
 {
     use Dispatchable,  SerializesModels;
+
     public $reply;
+
     /**
      * Create a new event instance.
      */
@@ -16,5 +18,4 @@ class ThreadReceivedNewReply
     {
         $this->reply = $reply;
     }
-
 }
